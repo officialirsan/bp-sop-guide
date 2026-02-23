@@ -1,0 +1,2509 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP Lengkap — Business Platform Unit</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --ink: #0f1117;
+            --paper: #f5f3ee;
+            --paper2: #eceae3;
+            --white: #fff;
+            --accent: #1a3a5c;
+            --accent2: #c8410a;
+            --accent3: #1e7a5e;
+            --red: #9b1c1c;
+            --rule: #d0cdc4;
+            --muted: #7a7568;
+            --chip-bg: #dfe8f0;
+            --chip-fg: #1a3a5c;
+            --mono: 'DM Mono', monospace;
+            --serif: 'Fraunces', Georgia, serif;
+            --sans: 'IBM Plex Sans', sans-serif;
+            --radius: 4px;
+            --shadow: 0 2px 12px rgba(0, 0, 0, .08), 0 0 0 1px rgba(0, 0, 0, .04);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--paper);
+            color: var(--ink);
+            font-family: var(--sans);
+            font-size: 14px;
+            line-height: 1.65;
+            min-height: 100vh;
+        }
+
+        /* ── SIDEBAR ── */
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 268px;
+            height: 100vh;
+            background: var(--accent);
+            color: #e8edf2;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        .sb-head {
+            padding: 24px 20px 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, .1);
+            flex-shrink: 0;
+        }
+
+        .sb-head .ey {
+            font-family: var(--mono);
+            font-size: 9px;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .4);
+            margin-bottom: 6px;
+        }
+
+        .sb-head h1 {
+            font-family: var(--serif);
+            font-size: 15px;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.3;
+        }
+
+        .sb-head .ver {
+            margin-top: 6px;
+            font-family: var(--mono);
+            font-size: 10px;
+            color: rgba(255, 255, 255, .3);
+        }
+
+        .sb-nav {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px 0 24px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, .12) transparent;
+        }
+
+        .sb-nav::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        .sb-nav::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, .15);
+        }
+
+        .nav-sec {
+            padding: 14px 20px 3px;
+            font-family: var(--mono);
+            font-size: 9px;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .28);
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 20px;
+            cursor: pointer;
+            color: rgba(255, 255, 255, .6);
+            font-size: 12px;
+            border-left: 3px solid transparent;
+            transition: all .14s;
+            text-decoration: none;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, .06);
+            color: #fff;
+        }
+
+        .nav-item.active {
+            background: rgba(255, 255, 255, .1);
+            color: #fff;
+            border-left-color: #f0a070;
+        }
+
+        .nav-code {
+            font-family: var(--mono);
+            font-size: 9.5px;
+            background: rgba(255, 255, 255, .1);
+            padding: 2px 5px;
+            border-radius: 3px;
+            color: rgba(255, 255, 255, .55);
+            flex-shrink: 0;
+            min-width: 52px;
+            text-align: center;
+        }
+
+        .nav-item.active .nav-code {
+            background: rgba(240, 160, 112, .25);
+            color: #f0a070;
+        }
+
+        /* ── MAIN ── */
+        #main {
+            margin-left: 268px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ── TOPBAR ── */
+        #topbar {
+            position: sticky;
+            top: 0;
+            background: var(--paper);
+            border-bottom: 1px solid var(--rule);
+            padding: 0 40px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 50;
+        }
+
+        .bc {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .bc span {
+            color: var(--ink);
+        }
+
+        .btn-sm {
+            border: 1px solid var(--rule);
+            background: none;
+            border-radius: 3px;
+            padding: 4px 10px;
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all .14s;
+        }
+
+        .btn-sm:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: #e8f0f8;
+        }
+
+        /* ── CONTENT ── */
+        #content {
+            flex: 1;
+            max-width: 1200px;
+            padding: 48px 40px 80px;
+        }
+
+        /* ── PAGE HEADER ── */
+        .page-hd {
+            margin-bottom: 40px;
+        }
+
+        .page-hd .ey {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+
+        .page-hd h1 {
+            font-family: var(--serif);
+            font-size: 34px;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1.1;
+        }
+
+        .page-hd p {
+            font-size: 14px;
+            color: var(--muted);
+            margin-top: 10px;
+            max-width: 600px;
+            line-height: 1.65;
+        }
+
+        /* ── SECTION LABEL ── */
+        .section-label {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin: 40px 0 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        /* ── OVERVIEW CARDS ── */
+        .ov-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .ov-card {
+            background: var(--white);
+            border: 1px solid var(--rule);
+            border-radius: var(--radius);
+            padding: 16px 18px;
+            cursor: pointer;
+            transition: all .15s;
+            text-decoration: none;
+            display: block;
+            border-left: 3px solid var(--rule);
+        }
+
+        .ov-card:hover {
+            border-left-color: var(--accent2);
+            box-shadow: var(--shadow);
+            transform: translateY(-1px);
+        }
+
+        .ov-card .oc {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--muted);
+        }
+
+        .ov-card .ot {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-top: 4px;
+            line-height: 1.3;
+        }
+
+        .ov-card .op {
+            margin-top: 8px;
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .ov-card .op strong {
+            color: var(--ink);
+        }
+
+        /* ── SOP SECTION ── */
+        .sop-sec {
+            margin-bottom: 64px;
+            scroll-margin-top: 68px;
+        }
+
+        .sop-hd {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .sop-badge {
+            font-family: var(--mono);
+            font-size: 11px;
+            background: var(--accent);
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 3px;
+            white-space: nowrap;
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+
+        .sop-badge.red {
+            background: var(--red);
+        }
+
+        .sop-badge.orange {
+            background: var(--accent2);
+        }
+
+        .sop-badge.teal {
+            background: var(--accent3);
+        }
+
+        .sop-badge.new {
+            background: var(--accent3);
+        }
+
+        .sop-tg h2 {
+            font-family: var(--serif);
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--accent);
+            line-height: 1.2;
+        }
+
+        .sop-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .chip {
+            font-family: var(--mono);
+            font-size: 10px;
+            background: var(--chip-bg);
+            color: var(--chip-fg);
+            padding: 2px 8px;
+            border-radius: 20px;
+        }
+
+        .chip.or {
+            background: #fce4d0;
+            color: #8b2e00;
+        }
+
+        .chip.gr {
+            background: #d4ede6;
+            color: #1a5c40;
+        }
+
+        .chip.rd {
+            background: #fde8e8;
+            color: #8b1a1a;
+        }
+
+        .chip.orange {
+            background: #fce8dc;
+            color: #8b3000;
+        }
+
+        .chip.green {
+            background: #d5ede6;
+            color: #1e5c44;
+        }
+
+        .sop-desc {
+            font-size: 13.5px;
+            color: var(--muted);
+            margin-bottom: 20px;
+            max-width: 700px;
+            line-height: 1.65;
+        }
+
+        /* ── SLA ROW ── */
+        .sla-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+            padding: 12px 16px;
+            background: var(--white);
+            border: 1px solid var(--rule);
+            border-radius: var(--radius);
+            border-left: 3px solid var(--accent2);
+        }
+
+        .sla-lbl {
+            font-family: var(--mono);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            color: var(--muted);
+            align-self: center;
+            margin-right: 4px;
+            white-space: nowrap;
+        }
+
+        .sla-i {
+            font-family: var(--mono);
+            font-size: 11px;
+            background: var(--paper2);
+            border: 1px solid var(--rule);
+            border-radius: 3px;
+            padding: 3px 8px;
+            color: var(--ink);
+            white-space: nowrap;
+        }
+
+        .sla-i strong {
+            color: var(--accent2);
+        }
+
+        .sla-i.red strong {
+            color: var(--red);
+        }
+
+        .sla-i.gr strong {
+            color: var(--accent3);
+        }
+
+        /* ── DIAGRAM CONTAINER ── */
+        .diag-wrap {
+            background: var(--white);
+            border: 1px solid var(--rule);
+            border-radius: var(--radius);
+            padding: 28px 24px;
+            box-shadow: var(--shadow);
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .diag-wrap .dlbl {
+            position: absolute;
+            top: 12px;
+            right: 14px;
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--muted);
+        }
+
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            min-height: 60px;
+        }
+
+        .mermaid svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* ── LEGEND ── */
+        .leg-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid var(--rule);
+        }
+
+        .leg-i {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11.5px;
+            color: var(--muted);
+        }
+
+        .leg-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* ── SEVERITY TABLE ── */
+        .sev-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin: 14px 0;
+        }
+
+        .sev-table th {
+            background: var(--accent);
+            color: #fff;
+            padding: 9px 14px;
+            text-align: left;
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .sev-table td {
+            padding: 9px 14px;
+            border-bottom: 1px solid var(--rule);
+            vertical-align: top;
+        }
+
+        .sev-p0 {
+            background: #9b1c1c;
+            color: #fff;
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 3px;
+            white-space: nowrap;
+        }
+
+        .sev-p1 {
+            background: #c8410a;
+            color: #fff;
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 3px;
+            white-space: nowrap;
+        }
+
+        .sev-p2 {
+            background: #1e4d8c;
+            color: #fff;
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 3px;
+            white-space: nowrap;
+        }
+
+        .sev-p3 {
+            background: #4a5568;
+            color: #fff;
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 3px;
+            white-space: nowrap;
+        }
+
+        /* ── DIVIDER ── */
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, var(--rule), transparent);
+            margin: 56px 0;
+        }
+
+        @media print {
+
+            #sidebar,
+            #topbar {
+                display: none;
+            }
+
+            #main {
+                margin-left: 0;
+            }
+
+            #content {
+                padding: 24px;
+            }
+
+            .sop-sec {
+                page-break-inside: avoid;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--rule);
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ═══════ SIDEBAR ═══════ -->
+    <nav id="sidebar">
+        <div class="sb-head">
+            <div class="ey">Business Platform Unit</div>
+            <h1>SOP Lengkap</h1>
+            <div class="ver">v2.0 · Scrum + Support & Maintenance</div>
+        </div>
+        <div class="sb-nav">
+            <div class="nav-sec">Ikhtisar</div>
+            <a class="nav-item active" href="#overview">
+                <span class="nav-code">INDEX</span><span>Semua SOP</span>
+            </a>
+
+            <div class="nav-sec">Scrum & Delivery</div>
+            <a class="nav-item" href="#sop-00">
+                <span class="nav-code">SOP-00</span><span>Onboarding Anggota Baru</span>
+            </a>
+            <a class="nav-item" href="#sop-01">
+                <span class="nav-code">SOP-01</span><span>Intake &amp; Backlog</span>
+            </a>
+            <a class="nav-item" href="#sop-02">
+                <span class="nav-code">SOP-02</span><span>Sprint Planning &amp; Gate 1</span>
+            </a>
+            <a class="nav-item" href="#sop-02b">
+                <span class="nav-code">SOP-02b</span><span>Daily Standup</span>
+            </a>
+            <a class="nav-item" href="#sop-03">
+                <span class="nav-code">SOP-03</span><span>PRD &amp; Acceptance Criteria</span>
+            </a>
+            <a class="nav-item" href="#sop-04">
+                <span class="nav-code">SOP-04</span><span>UX Design &amp; Handoff</span>
+            </a>
+            <a class="nav-item" href="#sop-05">
+                <span class="nav-code">SOP-05</span><span>Technical Design (ADR)</span>
+            </a>
+            <a class="nav-item" href="#sop-06">
+                <span class="nav-code">SOP-06</span><span>Dev, Code Review &amp; Gate 2</span>
+            </a>
+            <a class="nav-item" href="#sop-07">
+                <span class="nav-code">SOP-07</span><span>QA/UAT, Gate 3 &amp; Deploy</span>
+            </a>
+            <a class="nav-item" href="#sop-08">
+                <span class="nav-code">SOP-08</span><span>Monitoring &amp; Incident</span>
+            </a>
+
+            <div class="nav-sec">Support &amp; Maintenance</div>
+            <a class="nav-item" href="#sop-09a">
+                <span class="nav-code">SOP-09a</span><span>Penerimaan Tiket</span>
+            </a>
+            <a class="nav-item" href="#sop-09b">
+                <span class="nav-code">SOP-09b</span><span>Penanganan &amp; Eskalasi</span>
+            </a>
+            <a class="nav-item" href="#sop-10">
+                <span class="nav-code">SOP-10</span><span>Maintenance Terjadwal</span>
+            </a>
+            <a class="nav-item" href="#sop-11">
+                <span class="nav-code">SOP-11</span><span>Komunikasi ke Klien</span>
+            </a>
+            <a class="nav-item" href="#sop-12">
+                <span class="nav-code">SOP-12</span><span>Laporan Berkala</span>
+            </a>
+
+            <div class="nav-sec">Referensi</div>
+            <a class="nav-item" href="#severity">
+                <span class="nav-code">SEV</span><span>Severity Reference P0–P3</span>
+            </a>
+            <a class="nav-item" href="#sla-table">
+                <span class="nav-code">SLA</span><span>SLA Master Table</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- ═══════ MAIN ═══════ -->
+    <div id="main">
+        <div id="topbar">
+            <div class="bc">Business Platform Unit › SOP Lengkap › <span id="bc-cur">Index</span></div>
+            <div style="display:flex;gap:8px">
+                <button class="btn-sm" onclick="window.print()">⎙ Print</button>
+            </div>
+        </div>
+
+        <div id="content">
+
+            <div class="page-hd">
+                <div class="ey">Standard Operating Procedures · Business Platform Unit · v2.0</div>
+                <h1>SOP Lengkap — Business Platform Unit</h1>
+                <p>Referensi visual resmi seluruh prosedur kerja: dari onboarding, scrum delivery, hingga support &amp;
+                    maintenance klien eksternal. Jika ada perbedaan antara dokumen narasi dan flowchart ini, flowchart
+                    yang berlaku.</p>
+            </div>
+
+            <!-- ── OVERVIEW ── -->
+            <section id="overview">
+                <div class="section-label">Scrum &amp; Delivery</div>
+                <div class="ov-grid">
+                    <a class="ov-card" href="#sop-00">
+                        <div class="oc">SOP-00 · NEW</div>
+                        <div class="ot">Onboarding Anggota Baru</div>
+                        <div class="op">PIC: <strong>BULEAD, SA, ADM</strong></div>
+                    </a>
+                    <a class="ov-card" href="#sop-01">
+                        <div class="oc">SOP-01</div>
+                        <div class="ot">Intake &amp; Backlog Management</div>
+                        <div class="op">PIC: <strong>BTP</strong></div>
+                    </a>
+                    <a class="ov-card" href="#sop-02">
+                        <div class="oc">SOP-02</div>
+                        <div class="ot">Sprint Planning &amp; Gate 1</div>
+                        <div class="op">PIC: <strong>BULEAD, SA, BTP</strong></div>
+                    </a>
+                    <a class="ov-card" href="#sop-02b">
+                        <div class="oc">SOP-02b · NEW</div>
+                        <div class="ot">Daily Standup</div>
+                        <div class="op">PIC: <strong>SA (fasilitator)</strong></div>
+                    </a>
+                    <a class="ov-card" href="#sop-03">
+                        <div class="oc">SOP-03</div>
+                        <div class="ot">PRD &amp; Acceptance Criteria</div>
+                        <div class="op">PIC: <strong>BTP</strong></div>
+                    </a>
+                    <a class="ov-card" href="#sop-04">
+                        <div class="oc">SOP-04</div>
+                        <div class="ot">UX Design &amp; Handoff</div>
+                        <div class="op">PIC: <strong>UX</strong></div>
+                    </a>
+                    <a class="ov-card" href="#sop-05">
+                        <div class="oc">SOP-05</div>
+                        <div class="ot">Technical Design &amp; ADR</div>
+                        <div class="op">PIC: <strong>SA</strong></div>
+                    </a>
+                    <a class="ov-card" href="#sop-06">
+                        <div class="oc">SOP-06</div>
+                        <div class="ot">Development, Code Review &amp; Gate 2</div>
+                        <div class="op">PIC: <strong>Dev, SA</strong></div>
+                    </a>
+                    <a class="ov-card" href="#sop-07">
+                        <div class="oc">SOP-07</div>
+                        <div class="ot">QA/UAT, RC, Gate 3 &amp; Deploy</div>
+                        <div class="op">PIC: <strong>BTP, UX, SA, BULEAD</strong></div>
+                    </a>
+                    <a class="ov-card" href="#sop-08">
+                        <div class="oc">SOP-08</div>
+                        <div class="ot">Monitoring, Incident &amp; Retro</div>
+                        <div class="op">PIC: <strong>SA, BTP, BULEAD</strong></div>
+                    </a>
+                </div>
+
+                <div class="section-label">Support &amp; Maintenance — Klien Eksternal</div>
+                <div class="ov-grid">
+                    <a class="ov-card" href="#sop-09a">
+                        <div class="oc">SOP-09a</div>
+                        <div class="ot">Penerimaan Tiket</div>
+                        <div class="op">PIC: <strong>BTP → SA</strong></div>
+                    </a>
+                    <a class="ov-card" href="#sop-09b">
+                        <div class="oc">SOP-09b</div>
+                        <div class="ot">Penanganan &amp; Eskalasi</div>
+                        <div class="op">PIC: <strong>Dev → SA → BULEAD</strong></div>
+                    </a>
+                    <a class="ov-card" href="#sop-10">
+                        <div class="oc">SOP-10</div>
+                        <div class="ot">Maintenance Terjadwal</div>
+                        <div class="op">PIC: <strong>SA</strong></div>
+                    </a>
+                    <a class="ov-card" href="#sop-11">
+                        <div class="oc">SOP-11</div>
+                        <div class="ot">Komunikasi ke Klien</div>
+                        <div class="op">PIC: <strong>BTP</strong></div>
+                    </a>
+                    <a class="ov-card" href="#sop-12">
+                        <div class="oc">SOP-12</div>
+                        <div class="ot">Laporan Berkala</div>
+                        <div class="op">PIC: <strong>BTP · ADM</strong></div>
+                    </a>
+                    <a class="ov-card" href="#severity">
+                        <div class="oc">REFERENSI</div>
+                        <div class="ot">Severity P0–P3</div>
+                        <div class="op">SLA per level</div>
+                    </a>
+                    <a class="ov-card" href="#sla-table">
+                        <div class="oc">SLA MASTER</div>
+                        <div class="ot">SLA Master Table</div>
+                        <div class="op">26 SLA aktif</div>
+                    </a>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <!-- ════════════════════════════════════
+         BAGIAN I — SCRUM & DELIVERY
+    ════════════════════════════════════ -->
+
+            <!-- SOP-00 — ONBOARDING -->
+            <section class="sop-sec" id="sop-00">
+                <div class="sop-hd">
+                    <span class="sop-badge new">SOP-00</span>
+                    <div class="sop-tg">
+                        <h2>Onboarding Anggota Baru</h2>
+                        <div class="sop-meta">
+                            <span class="chip">PIC: BULEAD · SA · ADM</span>
+                            <span class="chip gr">Baru di v2.0</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="sop-desc">Memastikan setiap anggota baru dapat berkontribusi efektif dalam sprint paling
+                    lambat Minggu 4, dengan pemahaman SOP, akses tools, dan ekspektasi peran yang jelas.</p>
+                <div class="sla-row">
+                    <span class="sla-lbl">SLA</span>
+                    <span class="sla-i">Akses tools: <strong>H1–2</strong></span>
+                    <span class="sla-i">Baca SOP: <strong>H2–5</strong></span>
+                    <span class="sla-i">Shadow sprint: <strong>W2–4</strong></span>
+                    <span class="sla-i">PR pertama: <strong>W3–4</strong></span>
+                    <span class="sla-i">1-on-1 BULEAD: <strong>Bulan 1</strong></span>
+                </div>
+                <div class="diag-wrap">
+                    <span class="dlbl">SOP-00.mmd</span>
+                    <div class="mermaid">
+                        flowchart TD
+                        classDef bulead fill:#1a3a5c,color:#fff,stroke:none
+                        classDef sa fill:#1e4d8c,color:#fff,stroke:none
+                        classDef adm fill:#1e7a5e,color:#fff,stroke:none
+                        classDef btp fill:#5c3d1a,color:#fff,stroke:none
+                        classDef gate fill:#c8410a,color:#fff,stroke:none,font-weight:bold
+                        classDef action fill:#f5f3ee,color:#0f1117,stroke:#d0cdc4
+
+                        START(["Anggota baru bergabung"]):::bulead
+
+                        subgraph H1["Hari 1"]
+                        A1(["Perkenalan tim\n+ penjelasan visi-misi unit\n+ tur workspace & tools"]):::bulead
+                        end
+
+                        subgraph H12["Hari 1–2"]
+                        A2(["Setup akses:\nGit · Plane.so · Figma\nchat · email perusahaan"]):::adm
+                        A3{Semua akses\naktif?}:::action
+                        A3N(["Follow-up ke IT / ADM"]):::adm
+                        end
+
+                        subgraph H25["Hari 2–5"]
+                        A4(["Baca SOP-00 s/d SOP-08\n+ semua flowchart"]):::action
+                        A5(["Diskusi SOP dengan SA:\nklarifikasi + Q&A"]):::sa
+                        A6{Kuis pemahaman\nSOP ≥ 70%?}:::action
+                        A6N(["Ulang baca + diskusi\ndengan SA"]):::sa
+                        A7(["Baca ADR yang ada\n+ pahami stack teknis\n+ tulis ringkasan arsitektur 1 hal."]):::sa
+                        end
+
+                        subgraph W24["Minggu 2–4"]
+                        A8(["Shadow sprint aktif:\nikut semua ceremony\ntanpa tanggung jawab delivery"]):::action
+                        A9(["Task pertama:\n1 item kecil dengan\nsupervisi penuh SA"]):::sa
+                        A10{PR di-approve SA?}:::action
+                        A10N(["Revisi + diskusi\ndengan SA"]):::sa
+                        A11(["1-on-1 pertama dengan BULEAD:\nreview ekspektasi & hambatan\n→ Rencana belajar 3
+                        bulan"]):::bulead
+                        end
+
+                        DONE(["Onboarding selesai ✓\nSiap kontribusi sprint reguler"]):::gate
+
+                        START --> A1 --> A2 --> A3
+                        A3 -- "Belum" --> A3N --> A3
+                        A3 -- "Lengkap" --> A4 --> A5 --> A6
+                        A6 -- "Tidak" --> A6N --> A6
+                        A6 -- "Lulus" --> A7 --> A8 --> A9 --> A10
+                        A10 -- "Perlu revisi" --> A10N --> A10
+                        A10 -- "Approved" --> A11 --> DONE
+                    </div>
+                    <div class="leg-row">
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1a3a5c"></div>BULEAD
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1e4d8c"></div>SA
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1e7a5e"></div>ADM
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#c8410a"></div>Gate / Output
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#d0cdc4"></div>Decision
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <!-- SOP-01 — INTAKE -->
+            <section class="sop-sec" id="sop-01">
+                <div class="sop-hd">
+                    <span class="sop-badge">SOP-01</span>
+                    <div class="sop-tg">
+                        <h2>Intake &amp; Backlog Management</h2>
+                        <div class="sop-meta">
+                            <span class="chip">PIC: BTP</span>
+                            <span class="chip">Support: SA · Dev · BULEAD</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="sop-desc">Memastikan setiap request/feedback dari stakeholder ditangkap, dikualifikasi, dan
+                    masuk backlog dengan informasi lengkap sebelum diproses tim teknis.</p>
+                <div class="sla-row">
+                    <span class="sla-lbl">SLA</span>
+                    <span class="sla-i">Acknowledge Requester: <strong>≤ 1 hari kerja</strong></span>
+                    <span class="sla-i">Follow-up info: <strong>≤ 2 hari kerja</strong></span>
+                    <span class="sla-i">Finalisasi backlog: <strong>≤ 2 hari kerja</strong></span>
+                </div>
+                <div class="diag-wrap">
+                    <span class="dlbl">Flowchart_01.mmd</span>
+                    <div class="mermaid">
+                        flowchart LR
+                        classDef rq fill:#5c3d1a,color:#fff,stroke:none
+                        classDef btp fill:#1a3a5c,color:#fff,stroke:none
+                        classDef dev fill:#1e4d8c,color:#fff,stroke:none
+                        classDef sa fill:#2d6a9f,color:#fff,stroke:none
+                        classDef bl fill:#c8410a,color:#fff,stroke:none
+                        classDef adm fill:#1e7a5e,color:#fff,stroke:none
+                        classDef gate fill:#f5f3ee,color:#0f1117,stroke:#d0cdc4
+
+                        subgraph RQ[Requester]
+                        RQ1(["Kirim masukan via\nkanal resmi\n+ bukti opsional"]):::rq
+                        end
+
+                        subgraph BTP[BTP]
+                        BTP2(["Capture → buat\nbacklog item draft"]):::btp
+                        BTP2A(["Acknowledge ke\nRequester\n≤ 1 hari kerja"]):::btp
+                        BTP3(["Triage:\ntipe · area · priority-severity\n+ lampirkan bukti"]):::btp
+                        BTP4{Info cukup?}:::gate
+                        BTP5(["Set status Need Info\nfollow-up ke Requester\n≤ 2 hari kerja"]):::btp
+                        BTP6(["Finalisasi backlog item\nlabel lengkap + timestamp"]):::btp
+                        end
+
+                        subgraph DEV[Dev]
+                        DEV7(["Validasi teknis singkat\ncatatan impact / dugaan"]):::dev
+                        end
+
+                        subgraph SA[Solution Architect]
+                        SA8(["Konsultasi teknis\nopsional — high risk /\narsitektur"]):::sa
+                        end
+
+                        subgraph BL[BULEAD]
+                        BL9(["Konfirmasi masuk backlog\n+ prioritas awal\nopsional"]):::bl
+                        end
+
+                        subgraph ADM[Admin]
+                        ADM10(["Rekap intake\nmingguan"]):::adm
+                        end
+
+                        RQ1 --> BTP2 --> BTP2A --> BTP3 --> BTP4
+                        BTP4 -- "Tidak" --> BTP5 --> BTP4
+                        BTP4 -- "Ya" --> DEV7 --> SA8 --> BL9 --> BTP6 --> ADM10
+                    </div>
+                    <div class="leg-row">
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#5c3d1a"></div>Requester
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1a3a5c"></div>BTP
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1e4d8c"></div>Dev
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#2d6a9f"></div>SA
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#c8410a"></div>BULEAD
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1e7a5e"></div>ADM
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <!-- SOP-02 — SPRINT PLANNING -->
+            <section class="sop-sec" id="sop-02">
+                <div class="sop-hd">
+                    <span class="sop-badge">SOP-02</span>
+                    <div class="sop-tg">
+                        <h2>Sprint Planning &amp; Gate 1</h2>
+                        <div class="sop-meta">
+                            <span class="chip">PIC: BULEAD</span>
+                            <span class="chip">Day 1 Sprint · Maks 2 Jam</span>
+                            <span class="chip or">Gate 1: Scope Clear</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="sop-desc">Memastikan setiap sprint dimulai dengan scope yang jelas, realistis, dan disetujui
+                    semua pemangku kepentingan teknis. PRD v0.1 dari BTP harus tersedia H-2 sebelum Sprint Planning.</p>
+                <div class="sla-row">
+                    <span class="sla-lbl">SLA</span>
+                    <span class="sla-i">PRD v0.1 tersedia: <strong>H-2 sebelum Day 1</strong></span>
+                    <span class="sla-i">Sprint Planning selesai: <strong>Day 1 &lt; 2 jam</strong></span>
+                    <span class="sla-i">Gate 1 signed: <strong>EOD Day 1</strong></span>
+                </div>
+                <div class="diag-wrap">
+                    <span class="dlbl">Flowchart_02.mmd</span>
+                    <div class="mermaid">
+                        flowchart LR
+                        classDef btp fill:#1a3a5c,color:#fff,stroke:none
+                        classDef bl fill:#c8410a,color:#fff,stroke:none
+                        classDef sa fill:#2d6a9f,color:#fff,stroke:none
+                        classDef dev fill:#1e4d8c,color:#fff,stroke:none
+                        classDef gate fill:#f5f3ee,color:#0f1117,stroke:#d0cdc4
+                        classDef out fill:#1e7a5e,color:#fff,stroke:none
+
+                        subgraph BTP[BTP]
+                        BTP1(["Pre-planning:\nkandidat backlog top 5–10\n+ ringkasan / PRD draft\n(tersedia
+                        H-2)"]):::btp
+                        end
+
+                        subgraph BL[BULEAD]
+                        BL2(["Sprint Planning Day 1:\nTetapkan Sprint Goal"]):::bl
+                        BL3(["Pilih Must-have /\nNice-to-have\n+ tetapkan owner"]):::bl
+                        end
+
+                        subgraph SA[Solution Architect]
+                        SA4(["Review risiko teknis\n& dependency"]):::sa
+                        SA5(["Tandai item butuh\nADR / Tech Note"]):::sa
+                        end
+
+                        subgraph DEV[Dev]
+                        DEV6(["Estimasi S/M/L\n+ catatan constraint"]):::dev
+                        end
+
+                        subgraph G1[Gate 1 — Scope Clear]
+                        G1A{Approve\nBULEAD + SA?}:::gate
+                        G1B(["Revisi / split item\natau keluarkan\ndari sprint"]):::sa
+                        G1C(["Sprint Backlog Final\n+ Gate 1 checklist\nsigned di Plane.so"]):::out
+                        end
+
+                        BTP1 --> BL2 --> BL3 --> SA4 --> SA5 --> DEV6 --> G1A
+                        G1A -- "Tidak" --> G1B --> BL3
+                        G1A -- "Ya" --> G1C
+                    </div>
+                    <div class="leg-row">
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1a3a5c"></div>BTP
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#c8410a"></div>BULEAD
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#2d6a9f"></div>SA
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1e4d8c"></div>Dev
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1e7a5e"></div>Output
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <!-- SOP-02b — DAILY STANDUP -->
+            <section class="sop-sec" id="sop-02b">
+                <div class="sop-hd">
+                    <span class="sop-badge new">SOP-02b</span>
+                    <div class="sop-tg">
+                        <h2>Daily Standup</h2>
+                        <div class="sop-meta">
+                            <span class="chip">PIC: SA (fasilitator)</span>
+                            <span class="chip">Setiap Hari Kerja · Maks 15 Menit</span>
+                            <span class="chip gr">Baru di v2.0</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="sop-desc">Memastikan seluruh tim sinkron setiap hari, blocker teridentifikasi secepat mungkin,
+                    dan tidak ada masalah yang tersembunyi lebih dari 1 hari kerja.</p>
+                <div class="sla-row">
+                    <span class="sla-lbl">SLA</span>
+                    <span class="sla-i">Durasi: <strong>Maks 15 menit</strong></span>
+                    <span class="sla-i">Blocker dieskalasi: <strong>Hari yang sama</strong></span>
+                    <span class="sla-i">SA eskalasi ke BULEAD: <strong>≤ 1 hari kerja</strong></span>
+                </div>
+                <div class="diag-wrap">
+                    <span class="dlbl">SOP-02b.mmd</span>
+                    <div class="mermaid">
+                        flowchart TD
+                        classDef sa fill:#2d6a9f,color:#fff,stroke:none
+                        classDef all fill:#1a3a5c,color:#fff,stroke:none
+                        classDef bl fill:#c8410a,color:#fff,stroke:none
+                        classDef gate fill:#f5f3ee,color:#0f1117,stroke:#d0cdc4
+                        classDef ok fill:#1e7a5e,color:#fff,stroke:none
+
+                        START(["Standup dimulai\n09.00 · tiap hari kerja"]):::sa
+
+                        subgraph ROUND[Ronde per Orang — maks 2 menit]
+                        R1(["1. Kemarin selesaikan apa?\nmaks 2 kalimat"]):::all
+                        R2(["2. Hari ini kerjakan apa?\nmaks 2 kalimat"]):::all
+                        R3(["3. Ada blocker?"]):::all
+                        R4{Blocker\nada?}:::gate
+                        R4Y(["Catat blocker\nSA assign PIC resolve"]):::sa
+                        R4N(["Lanjut orang\nberikutnya"]):::ok
+                        end
+
+                        CHECK{Semua orang\nsudah?}:::gate
+                        OVERTIME{Durasi\n> 15 menit?}:::gate
+                        FOLLOWUP(["Jadwalkan follow-up\ndi luar standup\n— hanya pihak relevan"]):::sa
+
+                        subgraph RESOLVE[Setelah Standup]
+                        RES1{Blocker bisa\ndiselesaikan\nhari ini?}:::gate
+                        RES2(["SA + PIC resolve\nblocker"]):::sa
+                        RES3(["Eskalasi ke BULEAD\n≤ 1 hari kerja"]):::bl
+                        end
+
+                        DONE(["Standup selesai ✓\nUpdate status di Plane.so"]):::ok
+
+                        START --> R1 --> R2 --> R3 --> R4
+                        R4 -- "Ya" --> R4Y --> CHECK
+                        R4 -- "Tidak" --> R4N --> CHECK
+                        CHECK -- "Belum" --> R1
+                        CHECK -- "Semua" --> OVERTIME
+                        OVERTIME -- "Ya" --> FOLLOWUP --> DONE
+                        OVERTIME -- "Tidak" --> RESOLVE
+                        RES1 -- "Ya" --> RES2 --> DONE
+                        RES1 -- "Tidak" --> RES3 --> DONE
+                    </div>
+                    <div class="leg-row">
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#2d6a9f"></div>SA (fasilitator)
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1a3a5c"></div>Semua anggota
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#c8410a"></div>BULEAD (eskalasi)
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1e7a5e"></div>Output
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <!-- SOP-03 — PRD -->
+            <section class="sop-sec" id="sop-03">
+                <div class="sop-hd">
+                    <span class="sop-badge">SOP-03</span>
+                    <div class="sop-tg">
+                        <h2>PRD &amp; Acceptance Criteria</h2>
+                        <div class="sop-meta">
+                            <span class="chip">PIC: BTP</span>
+                            <span class="chip">Day 1–2 Sprint</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="sop-desc">Memastikan setiap fitur/item sprint memiliki definisi yang jelas, terukur, dan
+                    disepakati sebelum development dimulai. AC ambigu = item tidak boleh masuk sprint.</p>
+                <div class="sla-row">
+                    <span class="sla-lbl">SLA</span>
+                    <span class="sla-i">PRD v0.1: <strong>H-2 sebelum Sprint Planning</strong></span>
+                    <span class="sla-i">PRD v1 final approved: <strong>≤ Day 2 sprint</strong></span>
+                </div>
+                <div class="diag-wrap">
+                    <span class="dlbl">Flowchart_03.mmd</span>
+                    <div class="mermaid">
+                        flowchart LR
+                        classDef btp fill:#1a3a5c,color:#fff,stroke:none
+                        classDef ux fill:#7b3fa0,color:#fff,stroke:none
+                        classDef sa fill:#2d6a9f,color:#fff,stroke:none
+                        classDef dev fill:#1e4d8c,color:#fff,stroke:none
+                        classDef bl fill:#c8410a,color:#fff,stroke:none
+                        classDef gate fill:#f5f3ee,color:#0f1117,stroke:#d0cdc4
+                        classDef out fill:#1e7a5e,color:#fff,stroke:none
+
+                        subgraph BTP[BTP]
+                        BTP1(["Tulis PRD v0.1\n1 halaman:\nProblem · User Stories\nAC · Non-goals · Metric"]):::btp
+                        BTP6(["Final PRD v1\n+ link desain & ADR"]):::out
+                        end
+
+                        subgraph UX[UI/UX]
+                        UX2(["Review kebutuhan UX:\nstate & edge case"]):::ux
+                        end
+
+                        subgraph SA[Solution Architect]
+                        SA3(["Review feasibility\n+ NFR:\nperformance · security"]):::sa
+                        end
+
+                        subgraph DEV[Dev]
+                        DEV4(["Review implementability\n+ estimasi kasar"]):::dev
+                        end
+
+                        subgraph BL[BULEAD]
+                        BL5{Approve\nPRD v1?}:::gate
+                        end
+
+                        BTP1 --> UX2 --> SA3 --> DEV4 --> BL5
+                        BL5 -- "Tidak" --> BTP1
+                        BL5 -- "Ya" --> BTP6
+                    </div>
+                    <div class="leg-row">
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1a3a5c"></div>BTP
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#7b3fa0"></div>UI/UX
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#2d6a9f"></div>SA
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1e4d8c"></div>Dev
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#c8410a"></div>BULEAD
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1e7a5e"></div>Output
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <!-- SOP-04 — UX -->
+            <section class="sop-sec" id="sop-04">
+                <div class="sop-hd">
+                    <span class="sop-badge">SOP-04</span>
+                    <div class="sop-tg">
+                        <h2>UX Design &amp; Handoff</h2>
+                        <div class="sop-meta">
+                            <span class="chip">PIC: UI/UX</span>
+                            <span class="chip">Handoff ≤ Day 4 · UX QA ≤ Day 11</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="sop-desc">Dev tidak boleh memulai implementasi tanpa handoff lengkap. Handoff sah jika ada:
+                    file desain, anotasi komponen, catatan behavior, dan definisi semua state.</p>
+                <div class="sla-row">
+                    <span class="sla-lbl">SLA</span>
+                    <span class="sla-i">Handoff lengkap: <strong>≤ Day 4</strong></span>
+                    <span class="sla-i">UX QA pada RC: <strong>≤ Day 11</strong></span>
+                    <span class="sla-i">Temuan blocker saat Gate 3: <strong>= 0</strong></span>
+                </div>
+                <div class="diag-wrap">
+                    <span class="dlbl">Flowchart_04.mmd</span>
+                    <div class="mermaid">
+                        flowchart LR
+                        classDef btp fill:#1a3a5c,color:#fff,stroke:none
+                        classDef ux fill:#7b3fa0,color:#fff,stroke:none
+                        classDef dev fill:#1e4d8c,color:#fff,stroke:none
+                        classDef sa fill:#2d6a9f,color:#fff,stroke:none
+                        classDef bl fill:#c8410a,color:#fff,stroke:none
+                        classDef gate fill:#f5f3ee,color:#0f1117,stroke:#d0cdc4
+
+                        subgraph BTP[BTP]
+                        BTP1(["Kirim PRD v1\n+ prioritas flow\nMust-have"]):::btp
+                        end
+
+                        subgraph UX[UI/UX]
+                        UX2(["Buat user flow\n+ wireframe"]):::ux
+                        UX3(["Definisikan state:\nloading · empty · error\nerror · permission"]):::ux
+                        UX4(["Final desain\n+ handoff notes:\nkomponen · behavior\nmicrocopy"]):::ux
+                        UX8(["UX QA pada RC\n≤ Day 11\ncatat temuan + severity"]):::ux
+                        end
+
+                        subgraph DEV["Dev (FE / Mobile)"]
+                        DEV5(["Review handoff\n+ tanya constraint\nsebelum mulai"]):::dev
+                        DEV6(["Implement UI\nsesuai handoff\njika ada constraint:\nnotifikasi UX"]):::dev
+                        end
+
+                        subgraph SA[Solution Architect]
+                        SA7(["Konsultasi teknis\nopsional\ndampak besar"]):::sa
+                        end
+
+                        subgraph BL[BULEAD]
+                        BL9(["Validasi final UX\nterintegrasi Gate 3"]):::bl
+                        end
+
+                        BTP1 --> UX2 --> UX3 --> UX4 --> DEV5 --> DEV6 --> SA7 --> UX8 --> BL9
+                    </div>
+                    <div class="leg-row">
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1a3a5c"></div>BTP
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#7b3fa0"></div>UI/UX
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1e4d8c"></div>Dev
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#2d6a9f"></div>SA
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#c8410a"></div>BULEAD
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <!-- SOP-05 — ADR -->
+            <section class="sop-sec" id="sop-05">
+                <div class="sop-hd">
+                    <span class="sop-badge">SOP-05</span>
+                    <div class="sop-tg">
+                        <h2>Technical Design &amp; Review (ADR)</h2>
+                        <div class="sop-meta">
+                            <span class="chip">PIC: SA</span>
+                            <span class="chip">ADR draft ≤ Day 4</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="sop-desc">ADR wajib dibuat untuk: perubahan alur data signifikan, integrasi eksternal, schema
+                    DB non-backward-compatible, teknologi baru, dan perubahan yang berdampak ke lebih dari 1 komponen
+                    sekaligus.</p>
+                <div class="sla-row">
+                    <span class="sla-lbl">SLA</span>
+                    <span class="sla-i">ADR draft selesai: <strong>≤ Day 4</strong></span>
+                    <span class="sla-i">Disimpan di: <strong>/docs/adr/ADR-[N]-[judul].md</strong></span>
+                </div>
+                <div class="diag-wrap">
+                    <span class="dlbl">Flowchart_05.mmd</span>
+                    <div class="mermaid">
+                        flowchart LR
+                        classDef btp fill:#1a3a5c,color:#fff,stroke:none
+                        classDef sa fill:#2d6a9f,color:#fff,stroke:none
+                        classDef dev fill:#1e4d8c,color:#fff,stroke:none
+                        classDef bl fill:#c8410a,color:#fff,stroke:none
+                        classDef out fill:#1e7a5e,color:#fff,stroke:none
+
+                        subgraph BTP[BTP]
+                        BTP1(["Tandai item signifikan\nsaat sprint planning\n(wajib ADR)"]):::btp
+                        end
+
+                        subgraph SA[Solution Architect]
+                        SA2(["Tulis ADR:\nContext · Decision\nAlternatives · Impact\nObservability · Rollback"]):::sa
+                        SA6(["Final ADR approved\n+ link ke backlog item\ndisimpan /docs/adr/"]):::out
+                        end
+
+                        subgraph DEV[Dev]
+                        DEV3(["Review ADR:\nsteps · risiko · effort"]):::dev
+                        end
+
+                        subgraph BL[BULEAD]
+                        BL4(["Konsultasi jika\ndampak bisnis tinggi\nopsional"]):::bl
+                        end
+
+                        BTP1 --> SA2 --> DEV3 --> SA6 --> BL4
+                    </div>
+                    <div class="leg-row">
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1a3a5c"></div>BTP
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#2d6a9f"></div>SA
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1e4d8c"></div>Dev
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#c8410a"></div>BULEAD
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1e7a5e"></div>Output
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <!-- SOP-06 — DEVELOPMENT -->
+            <section class="sop-sec" id="sop-06">
+                <div class="sop-hd">
+                    <span class="sop-badge">SOP-06</span>
+                    <div class="sop-tg">
+                        <h2>Development, Code Review &amp; Gate 2</h2>
+                        <div class="sop-meta">
+                            <span class="chip">PIC: Dev · SA</span>
+                            <span class="chip or">Gate 2: Build Quality</span>
+                            <span class="chip">Branch Strategy v2.0</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="sop-desc">Semua PR ke development wajib disetujui SA. Hanya SA yang boleh merge ke staging dan
+                    main. Tidak ada push langsung ke main atau staging.</p>
+                <div class="sla-row">
+                    <span class="sla-lbl">SLA</span>
+                    <span class="sla-i">Task breakdown: <strong>≤ Day 2</strong></span>
+                    <span class="sla-i">Code review SA: <strong>≤ 1 hari kerja</strong></span>
+                    <span class="sla-i">Revisi PR Dev: <strong>≤ 1 hari kerja</strong></span>
+                    <span class="sla-i">RC siap: <strong>≤ Day 10</strong></span>
+                </div>
+                <div class="diag-wrap">
+                    <span class="dlbl">Flowchart_06.mmd</span>
+                    <div class="mermaid">
+                        flowchart LR
+                        classDef sa fill:#2d6a9f,color:#fff,stroke:none
+                        classDef dev fill:#1e4d8c,color:#fff,stroke:none
+                        classDef btp fill:#1a3a5c,color:#fff,stroke:none
+                        classDef gate fill:#f5f3ee,color:#0f1117,stroke:#d0cdc4
+                        classDef out fill:#1e7a5e,color:#fff,stroke:none
+
+                        subgraph SA[Solution Architect]
+                        SA1(["Pastikan standar:\nDoD + review checklist\n+ branch strategy"]):::sa
+                        SA6(["Code Review\n≤ 1 hari kerja\nApprove / Request Changes"]):::sa
+                        SA10{Gate 2:\nBuild Quality\npass?}:::gate
+                        end
+
+                        subgraph DEV[Dev]
+                        DEV2(["Task breakdown\n≤ Day 2\nbuat branch feature/*"]):::dev
+                        DEV3(["Implement\n+ test minimal\n+ logging/error handling"]):::dev
+                        DEV4(["Buat PR ke development\n+ isi DoD checklist\nassign SA sebagai reviewer"]):::dev
+                        DEV7(["Perbaiki sesuai review\nupdate PR\n≤ 1 hari kerja"]):::dev
+                        DEV8(["Merge ke development\n+ smoke test\nend-to-end"]):::dev
+                        end
+
+                        subgraph BTP[BTP]
+                        BTP9(["Verifikasi cepat AC\nopsional\nsebelum UAT"]):::btp
+                        end
+
+                        subgraph DONE[Output]
+                        D1(["RC siap di staging\n≤ Day 10"]):::out
+                        end
+
+                        SA1 --> DEV2 --> DEV3 --> DEV4 --> SA6
+                        SA6 -- "Request Changes" --> DEV7 --> SA6
+                        SA6 -- "Approve" --> DEV8 --> BTP9 --> SA10
+                        SA10 -- "Tidak lulus" --> DEV3
+                        SA10 -- "Lulus" --> D1
+                    </div>
+                    <div class="leg-row">
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#2d6a9f"></div>SA
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1e4d8c"></div>Dev
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1a3a5c"></div>BTP
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1e7a5e"></div>Output / Gate lulus
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <!-- SOP-07 — QA/DEPLOY -->
+            <section class="sop-sec" id="sop-07">
+                <div class="sop-hd">
+                    <span class="sop-badge">SOP-07</span>
+                    <div class="sop-tg">
+                        <h2>QA/UAT, RC, Gate 3 &amp; Deploy</h2>
+                        <div class="sop-meta">
+                            <span class="chip">PIC: BTP · UX · SA · BULEAD</span>
+                            <span class="chip or">Gate 3: Release Ready</span>
+                            <span class="chip rd">Major vs Minor Release</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="sop-desc">Major Release: perubahan core flow, integrasi baru, migration DB, atau breaking API.
+                    Standby Window wajib aktif. Minor Release: bug fix dan peningkatan kecil.</p>
+                <div class="sla-row">
+                    <span class="sla-lbl">SLA</span>
+                    <span class="sla-i">RC di staging: <strong>Day 10</strong></span>
+                    <span class="sla-i">UAT + UX QA: <strong>≤ Day 11</strong></span>
+                    <span class="sla-i">Release Notes: <strong>≤ Day 11</strong></span>
+                    <span class="sla-i">Gate 3 signed: <strong>Day 11 EOD</strong></span>
+                    <span class="sla-i">Deploy + verify: <strong>Day 12 + ≤ 2 jam</strong></span>
+                </div>
+                <div class="diag-wrap">
+                    <span class="dlbl">Flowchart_07.mmd</span>
+                    <div class="mermaid">
+                        flowchart LR
+                        classDef dev fill:#1e4d8c,color:#fff,stroke:none
+                        classDef btp fill:#1a3a5c,color:#fff,stroke:none
+                        classDef ux fill:#7b3fa0,color:#fff,stroke:none
+                        classDef adm fill:#1e7a5e,color:#fff,stroke:none
+                        classDef sa fill:#2d6a9f,color:#fff,stroke:none
+                        classDef bl fill:#c8410a,color:#fff,stroke:none
+                        classDef gate fill:#f5f3ee,color:#0f1117,stroke:#d0cdc4
+                        classDef stb fill:#8b1a1a,color:#fff,stroke:none
+
+                        subgraph DEV[Dev]
+                        DEV1(["Siapkan RC\nmerge ke staging\n≤ Day 10"]):::dev
+                        DEV2(["Regression minimal\n+ perbaiki blocker"]):::dev
+                        end
+
+                        subgraph BTP[BTP]
+                        BTP3(["UAT sesuai AC\n≤ Day 11\ncatat pass / fail"]):::btp
+                        BTP11(["Komunikasi rilis\nke user + feedback"]):::btp
+                        end
+
+                        subgraph UX[UI/UX]
+                        UX4(["UX QA pada RC\n≤ Day 11\ncatat temuan + severity"]):::ux
+                        end
+
+                        subgraph ADM[Admin]
+                        ADM5(["Release Notes siap\n≤ Day 11\nH-1 deploy"]):::adm
+                        end
+
+                        subgraph SA[Solution Architect]
+                        SA6(["Validasi readiness:\nmonitoring plan\n+ rollback plan"]):::sa
+                        SA9(["Deploy Day 12\n+ post-deploy\nverification ≤ 2 jam"]):::sa
+                        end
+
+                        subgraph G3[Gate 3 — Release Ready]
+                        G3A{Approve\nBULEAD + SA?}:::gate
+                        end
+
+                        subgraph BL[BULEAD]
+                        BL7(["Review value / priority\n+ scope cut bila perlu"]):::bl
+                        end
+
+                        subgraph STB["Standby Window (Major Release)"]
+                        STB10(["SA + 1 Dev standby\nDay 12 · 08.00–17.00\nchannel incident aktif\nisi Standby Window
+                        Log"]):::stb
+                        end
+
+                        DEV1 --> DEV2 --> BTP3 --> UX4 --> ADM5 --> SA6 --> BL7 --> G3A
+                        G3A -- "Tidak" --> DEV2
+                        G3A -- "Ya" --> SA9 --> STB10 --> BTP11
+                    </div>
+                    <div class="leg-row">
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1e4d8c"></div>Dev
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1a3a5c"></div>BTP
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#7b3fa0"></div>UX
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1e7a5e"></div>ADM
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#2d6a9f"></div>SA
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#c8410a"></div>BULEAD
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#8b1a1a"></div>Standby Window
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <!-- SOP-08 — MONITORING -->
+            <section class="sop-sec" id="sop-08">
+                <div class="sop-hd">
+                    <span class="sop-badge">SOP-08</span>
+                    <div class="sop-tg">
+                        <h2>Monitoring, Incident, Postmortem &amp; Retro</h2>
+                        <div class="sop-meta">
+                            <span class="chip">PIC: SA (Incident Commander) · BTP · BULEAD</span>
+                            <span class="chip rd">P0 Ack ≤ 15 mnt</span>
+                            <span class="chip or">P1 Ack ≤ 1 jam</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="sop-desc">Post-release check wajib dalam ≤ 2 jam setelah deploy. Postmortem wajib untuk P0/P1
+                    dalam ≤ 2 hari kerja. Retro + Grooming diselesaikan Day 14.</p>
+                <div class="sla-row">
+                    <span class="sla-lbl">SLA</span>
+                    <span class="sla-i">Post-deploy check: <strong>≤ 2 jam</strong></span>
+                    <span class="sla-i red">P0 Ack: <strong>≤ 15 mnt</strong></span>
+                    <span class="sla-i">P1 Ack: <strong>≤ 1 jam</strong></span>
+                    <span class="sla-i">P2 Ack: <strong>≤ 4 jam</strong></span>
+                    <span class="sla-i">Postmortem P0/P1: <strong>≤ 2 hari kerja</strong></span>
+                    <span class="sla-i">Retro + Grooming: <strong>Day 14</strong></span>
+                </div>
+                <div class="diag-wrap">
+                    <span class="dlbl">Flowchart_08.mmd</span>
+                    <div class="mermaid">
+                        flowchart LR
+                        classDef sadev fill:#2d6a9f,color:#fff,stroke:none
+                        classDef sa fill:#1e4d8c,color:#fff,stroke:none
+                        classDef dev fill:#1e5c8c,color:#fff,stroke:none
+                        classDef btp fill:#1a3a5c,color:#fff,stroke:none
+                        classDef bl fill:#c8410a,color:#fff,stroke:none
+                        classDef adm fill:#1e7a5e,color:#fff,stroke:none
+                        classDef gate fill:#f5f3ee,color:#0f1117,stroke:#d0cdc4
+
+                        subgraph MON["SA + Dev (Monitoring)"]
+                        M1(["Post-release check\n≤ 2 jam\nerror · perf · keluhan"]):::sadev
+                        M2{Anomali /\nIncident?}:::gate
+                        end
+
+                        subgraph INC["SA (Incident Commander)"]
+                        I3(["Buat Incident Log\n+ tetapkan severity\nP0/P1/P2/P3"]):::sa
+                        I4(["Cek Standby ON/OFF\n→ SLA berlaku"]):::sa
+                        I5(["Acknowledge sesuai SLA\nassign PIC fix"]):::sa
+                        I10(["Postmortem wajib P0/P1\nroot cause + prevention\n≤ 2 hari kerja"]):::sa
+                        end
+
+                        subgraph FIX[Dev]
+                        F6(["Mitigasi / workaround\nsesuai SLA"]):::dev
+                        F7(["Fix + test minimal\nPR hotfix → merge → deploy"]):::dev
+                        F8(["Verifikasi pemulihan\nlayanan"]):::dev
+                        end
+
+                        subgraph COM[BTP]
+                        C9(["Update komunikasi\nke user sesuai SLA"]):::btp
+                        C11(["Buat prevention task\nmasuk backlog SOP-01"]):::btp
+                        G14(["Day 14:\nBacklog Grooming\nbersih + kandidat sprint"]):::btp
+                        end
+
+                        subgraph RET[BULEAD]
+                        R12(["Day 14: Retro\nStart / Stop / Continue\nmaks 3 action items"]):::bl
+                        R13(["Review SLA/KPI sprint\n+ keputusan perbaikan\nproses"]):::bl
+                        end
+
+                        subgraph ARC[Admin]
+                        A15(["Arsip:\nincident log · postmortem\nretro notes · standby log"]):::adm
+                        end
+
+                        M1 --> M2
+                        M2 -- "Tidak" --> R12
+                        M2 -- "Ya" --> I3 --> I4 --> I5 --> F6 --> F7 --> F8 --> C9 --> I10 --> C11 --> A15 --> R12 -->
+                        R13 --> G14
+                    </div>
+                    <div class="leg-row">
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#2d6a9f"></div>SA + Dev (monitoring)
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1e4d8c"></div>SA (Incident Commander)
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1e5c8c"></div>Dev (fix)
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1a3a5c"></div>BTP
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#c8410a"></div>BULEAD
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1e7a5e"></div>ADM
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <!-- ════════════════════════════════════
+         BAGIAN II — SUPPORT & MAINTENANCE
+    ════════════════════════════════════ -->
+
+            <!-- SEVERITY REFERENCE -->
+            <section class="sop-sec" id="severity">
+                <div class="sop-hd">
+                    <span class="sop-badge red">SEVERITY</span>
+                    <div class="sop-tg">
+                        <h2>Severity Reference — P0 hingga P3</h2>
+                        <div class="sop-meta">
+                            <span class="chip rd">P0 Ack ≤ 1 jam</span>
+                            <span class="chip or">P1 Ack ≤ 2 jam</span>
+                            <span class="chip">P2 Ack ≤ 4 jam</span>
+                            <span class="chip">P3 Ack ≤ 1 hari</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="sop-desc">Referensi cepat untuk semua anggota tim dalam menentukan dan menangani severity
+                    tiket klien. SLA dihitung dalam jam kerja (09.00–17.00 WIB, Senin–Jumat) kecuali kontrak hotline
+                    24/7.</p>
+                <div style="overflow-x:auto">
+                    <table class="sev-table">
+                        <thead>
+                            <tr>
+                                <th>Severity</th>
+                                <th>Definisi</th>
+                                <th>Contoh</th>
+                                <th>First Response</th>
+                                <th>Workaround</th>
+                                <th>Resolution</th>
+                                <th>Postmortem</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="sev-p0">P0 Critical</span></td>
+                                <td>Layanan utama tidak bisa diakses / data loss aktif</td>
+                                <td>Sistem down total, tidak bisa login, data terhapus</td>
+                                <td style="color:#9b1c1c;font-weight:600">≤ 1 jam</td>
+                                <td style="color:#9b1c1c;font-weight:600">≤ 2 jam</td>
+                                <td style="color:#9b1c1c;font-weight:600">≤ 4 jam</td>
+                                <td>Wajib</td>
+                            </tr>
+                            <tr style="background:var(--paper2)">
+                                <td><span class="sev-p1">P1 High</span></td>
+                                <td>Fitur utama tidak berfungsi, ada dampak bisnis signifikan</td>
+                                <td>Laporan tidak bisa diexport, notifikasi tidak terkirim, API error 500</td>
+                                <td style="color:#c8410a;font-weight:600">≤ 2 jam</td>
+                                <td style="color:#c8410a;font-weight:600">≤ 4 jam</td>
+                                <td style="color:#c8410a;font-weight:600">≤ 1 hari kerja</td>
+                                <td>Wajib</td>
+                            </tr>
+                            <tr>
+                                <td><span class="sev-p2">P2 Medium</span></td>
+                                <td>Fitur non-kritis terdampak, ada workaround memadai</td>
+                                <td>Filter tidak bekerja, tampilan salah di browser tertentu</td>
+                                <td style="font-weight:600">≤ 4 jam</td>
+                                <td style="font-weight:600">≤ 1 hari kerja</td>
+                                <td style="font-weight:600">≤ 3 hari kerja</td>
+                                <td>Opsional</td>
+                            </tr>
+                            <tr style="background:var(--paper2)">
+                                <td><span class="sev-p3">P3 Low</span></td>
+                                <td>Minor issue, estetika, pertanyaan, enhancement minor</td>
+                                <td>Typo label, warna salah, pertanyaan cara pakai fitur</td>
+                                <td style="font-weight:600">≤ 1 hari kerja</td>
+                                <td>N/A</td>
+                                <td style="font-weight:600">≤ 5 hari kerja</td>
+                                <td>Tidak</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <!-- SOP-09a — PENERIMAAN TIKET -->
+            <section class="sop-sec" id="sop-09a">
+                <div class="sop-hd">
+                    <span class="sop-badge">SOP-09a</span>
+                    <div class="sop-tg">
+                        <h2>Penerimaan &amp; Triage Tiket</h2>
+                        <div class="sop-meta">
+                            <span class="chip">PIC: BTP</span>
+                            <span class="chip">Support: SA</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="sop-desc">Setiap tiket dari klien eksternal wajib dicatat di Plane.so dalam ≤ 30 menit jam
+                    kerja. Klien mendapat konfirmasi bernomor tiket dan estimasi penanganan.</p>
+                <div class="sla-row">
+                    <span class="sla-lbl">SLA</span>
+                    <span class="sla-i">Catat tiket di Plane: <strong>≤ 30 menit</strong></span>
+                    <span class="sla-i red">First Response P0: <strong>≤ 1 jam</strong></span>
+                    <span class="sla-i">First Response P1: <strong>≤ 2 jam</strong></span>
+                    <span class="sla-i">First Response P2: <strong>≤ 4 jam</strong></span>
+                    <span class="sla-i">First Response P3: <strong>≤ 1 hari kerja</strong></span>
+                </div>
+                <div class="diag-wrap">
+                    <span class="dlbl">SOP-09a.mmd</span>
+                    <div class="mermaid">
+                        flowchart TD
+                        classDef klien fill:#5c3d1a,color:#fff,stroke:none
+                        classDef btp fill:#1a3a5c,color:#fff,stroke:none
+                        classDef sa fill:#2d6a9f,color:#fff,stroke:none
+                        classDef bl fill:#c8410a,color:#fff,stroke:none
+                        classDef gate fill:#f5f3ee,color:#0f1117,stroke:#d0cdc4
+                        classDef done fill:#1e7a5e,color:#fff,stroke:none
+
+                        K1(["Klien mengirim tiket\nvia kanal resmi\nemail / WA / hotline"]):::klien
+
+                        subgraph BTP_RECV[BTP — Penerimaan]
+                        B1(["Catat tiket di Plane.so\n≤ 30 menit jam kerja\nBuat nomor tiket: [PROD]-T-XXX"]):::btp
+                        B2(["Triage awal:\nKategori + Severity P0–P3"]):::btp
+                        B3{Info lengkap?}:::gate
+                        B4(["Follow-up ke klien\n≤ 2 jam\nStatus: Waiting Client Info"]):::btp
+                        B5(["Kirim First Response ke klien\ndalam SLA severity berlaku\n+ nomor tiket + PIC +
+                        estimasi"]):::btp
+                        end
+
+                        subgraph SA_VAL[SA — Validasi]
+                        S1(["Review severity\n+ validasi teknis awal"]):::sa
+                        S2{Severity\nperlu diubah?}:::gate
+                        S3(["Update severity\n+ notifikasi BTP"]):::sa
+                        S4(["Assign ke Dev\nsesuai area teknis"]):::done
+                        end
+
+                        P0{Severity\nP0?}:::gate
+                        BL(["Notifikasi BULEAD\nsegera"]):::bl
+
+                        K1 --> B1 --> B2 --> B3
+                        B3 -- "Tidak" --> B4 --> B3
+                        B3 -- "Ya" --> B5 --> S1 --> S2
+                        S2 -- "Ya" --> S3 --> S4
+                        S2 -- "Tidak" --> S4
+                        S4 --> P0
+                        P0 -- "Ya" --> BL
+                        P0 -- "Tidak" --> DONE(["Tiket masuk antrean\npenanganan Dev"]):::done
+                    </div>
+                    <div class="leg-row">
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#5c3d1a"></div>Klien
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1a3a5c"></div>BTP
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#2d6a9f"></div>SA
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#c8410a"></div>BULEAD
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1e7a5e"></div>Output / Selesai
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <!-- SOP-09b — PENANGANAN & ESKALASI -->
+            <section class="sop-sec" id="sop-09b">
+                <div class="sop-hd">
+                    <span class="sop-badge orange">SOP-09b</span>
+                    <div class="sop-tg">
+                        <h2>Penanganan, Hotfix &amp; Eskalasi</h2>
+                        <div class="sop-meta">
+                            <span class="chip">PIC: Dev · SA</span>
+                            <span class="chip rd">PR Hotfix P0/P1: ≤ 30 menit review</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="sop-desc">Dev tidak berkomunikasi langsung ke klien. Semua update ke klien melalui BTP. SA
+                    adalah satu-satunya yang boleh approve dan deploy hotfix ke production.</p>
+                <div class="sla-row">
+                    <span class="sla-lbl">SLA</span>
+                    <span class="sla-i red">Workaround P0: <strong>≤ 2 jam</strong></span>
+                    <span class="sla-i red">Resolution P0: <strong>≤ 4 jam</strong></span>
+                    <span class="sla-i">Workaround P1: <strong>≤ 4 jam</strong></span>
+                    <span class="sla-i">Resolution P1: <strong>≤ 1 hari kerja</strong></span>
+                    <span class="sla-i">PR Review P0/P1: <strong>≤ 30 menit</strong></span>
+                    <span class="sla-i">Post-deploy verify: <strong>≤ 1 jam</strong></span>
+                </div>
+                <div class="diag-wrap">
+                    <span class="dlbl">SOP-09b.mmd</span>
+                    <div class="mermaid">
+                        flowchart LR
+                        classDef dev fill:#1e4d8c,color:#fff,stroke:none
+                        classDef sa fill:#2d6a9f,color:#fff,stroke:none
+                        classDef btp fill:#1a3a5c,color:#fff,stroke:none
+                        classDef bl fill:#c8410a,color:#fff,stroke:none
+                        classDef gate fill:#f5f3ee,color:#0f1117,stroke:#d0cdc4
+                        classDef done fill:#1e7a5e,color:#fff,stroke:none
+                        classDef war fill:#9b1c1c,color:#fff,stroke:none
+
+                        START(["Tiket assigned\nke Dev"]):::dev
+
+                        subgraph DEV[Dev — Investigasi]
+                        D1(["Investigasi root cause\nupdate Plane.so\n≤ 2 jam P0/P1\n≤ 4 jam P2/P3"]):::dev
+                        D2{Workaround\ntersedia?}:::gate
+                        D3(["Dokumentasikan workaround\nkirim ke BTP"]):::dev
+                        D4(["Implementasi fix\nbranch: hotfix/[kode-tiket]\ntest minimal"]):::dev
+                        D5(["Buat PR hotfix\nassign SA reviewer"]):::dev
+                        end
+
+                        subgraph COMM[BTP — Komunikasi]
+                        C1(["Komunikasikan workaround\nke klien segera"]):::btp
+                        C2(["Update progress ke klien\nsesuai frekuensi severity"]):::btp
+                        C3(["Konfirmasi resolusi\nke klien"]):::btp
+                        end
+
+                        subgraph SA_FIX[SA — Review & Deploy]
+                        S1(["Ekspres review PR\n≤ 30 menit P0/P1\n≤ 2 jam P2/P3"]):::sa
+                        S2{PR\nApprove?}:::gate
+                        S3(["Request changes\nke Dev"]):::sa
+                        S4(["Approve + deploy\nhotfix ke production"]):::sa
+                        S5(["Post-deploy verification\n≤ 1 jam"]):::sa
+                        S6{Layanan\npulih?}:::gate
+                        end
+
+                        subgraph BL[BULEAD]
+                        BL1(["Aktifkan war room\npanggil Dev relevan\nP0 > 2 jam tanpa workaround"]):::war
+                        BL2(["Komunikasi level\nexekutif ke klien\njika SLA breach"]):::bl
+                        end
+
+                        subgraph CLOSE[Penutupan]
+                        CL1(["BTP tutup tiket\ndi Plane.so\ncatat waktu resolusi aktual"]):::done
+                        CL2(["ADM arsip\ntiket + log"]):::done
+                        end
+
+                        SLA_CHECK{SLA\nterancam?}:::gate
+
+                        START --> D1 --> D2
+                        D2 -- "Ya" --> D3 --> C1
+                        D2 -- "Tidak" --> C2
+                        C1 --> D4
+                        C2 --> D4
+                        D4 --> D5 --> S1 --> S2
+                        S2 -- "Tidak" --> S3 --> D4
+                        S2 -- "Ya" --> S4 --> S5 --> S6
+                        S6 -- "Tidak" --> BL1 --> D4
+                        S6 -- "Ya" --> C3 --> CL1 --> CL2
+                        D1 --> SLA_CHECK
+                        SLA_CHECK -- "Ya" --> BL2
+                    </div>
+                    <div class="leg-row">
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1e4d8c"></div>Dev
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#2d6a9f"></div>SA
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1a3a5c"></div>BTP
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#c8410a"></div>BULEAD
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#9b1c1c"></div>War Room (P0 eskalasi)
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1e7a5e"></div>Output / Selesai
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <!-- SOP-10 — MAINTENANCE -->
+            <section class="sop-sec" id="sop-10">
+                <div class="sop-hd">
+                    <span class="sop-badge teal">SOP-10</span>
+                    <div class="sop-tg">
+                        <h2>Maintenance Rutin Terjadwal</h2>
+                        <div class="sop-meta">
+                            <span class="chip">PIC: SA</span>
+                            <span class="chip gr">Window: Rabu/Kamis 22.00–04.00 WIB</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="sop-desc">Semua maintenance yang berpotensi berdampak ke layanan klien wajib dinotifikasikan
+                    sesuai lead time. SA menyiapkan runbook sebelum eksekusi. Post-maintenance verification wajib dalam
+                    ≤ 1 jam.</p>
+                <div class="sla-row">
+                    <span class="sla-lbl">NOTIF KLIEN</span>
+                    <span class="sla-i red">Security patch: <strong>≤ 24 jam</strong></span>
+                    <span class="sla-i">Minor update: <strong>≤ 3 hari</strong></span>
+                    <span class="sla-i">Major update: <strong>≤ 2 minggu</strong></span>
+                    <span class="sla-i">DB maintenance: <strong>≤ 3 hari</strong></span>
+                    <span class="sla-i gr">Post-verify: <strong>≤ 1 jam</strong></span>
+                </div>
+                <div class="diag-wrap">
+                    <span class="dlbl">SOP-10.mmd</span>
+                    <div class="mermaid">
+                        flowchart LR
+                        classDef sa fill:#2d6a9f,color:#fff,stroke:none
+                        classDef btp fill:#1a3a5c,color:#fff,stroke:none
+                        classDef adm fill:#1e7a5e,color:#fff,stroke:none
+                        classDef dev fill:#1e4d8c,color:#fff,stroke:none
+                        classDef gate fill:#f5f3ee,color:#0f1117,stroke:#d0cdc4
+                        classDef done fill:#1e7a5e,color:#fff,stroke:none
+                        classDef warn fill:#c8410a,color:#fff,stroke:none
+
+                        subgraph SA_PLAN[SA — Perencanaan]
+                        P1(["Identifikasi kebutuhan\nmaintenance\nbuat issue di Plane.so"]):::sa
+                        P2(["Tentukan jenis, durasi\nestimat downtime\njadwal maintenance window"]):::sa
+                        P3(["Siapkan runbook\n+ rollback plan"]):::sa
+                        end
+
+                        subgraph BTP_NOTIF[BTP — Notifikasi]
+                        N1(["Kirim notifikasi ke klien\nsesuai lead time\n+ estimasi dampak"]):::btp
+                        N2(["Kirim reminder H-1\nke klien"]):::btp
+                        end
+
+                        subgraph ADM_LOG[ADM — Dokumentasi]
+                        A1(["Catat rencana\ndi Plane.so"]):::adm
+                        A2(["Arsip maintenance log\njadwal · durasi aktual\ntemuan · status"]):::adm
+                        end
+
+                        subgraph EXEC[SA + Dev — Eksekusi]
+                        E1(["Eksekusi maintenance\nsesuai runbook\nDev on-call standby"]):::sa
+                        E2(["Post-maintenance\nverification penuh\n≤ 1 jam"]):::sa
+                        E3{Semua service\nnormal?}:::gate
+                        E4(["Rollback\n+ investigasi"]):::warn
+                        end
+
+                        subgraph CLOSE[Penutupan]
+                        C1(["BTP kirim notifikasi\n'maintenance selesai'\n+ ringkasan ke klien"]):::btp
+                        C2(["ADM arsip log\nlengkap"]):::adm
+                        end
+
+                        P1 --> P2 --> P3 --> N1 --> A1 --> N2 --> E1 --> E2 --> E3
+                        E3 -- "Tidak" --> E4 --> E1
+                        E3 -- "Ya" --> C1 --> C2
+                    </div>
+                    <div class="leg-row">
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#2d6a9f"></div>SA
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1a3a5c"></div>BTP
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1e7a5e"></div>ADM
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1e4d8c"></div>Dev (on-call)
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#c8410a"></div>Rollback
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <!-- SOP-11 — KOMUNIKASI -->
+            <section class="sop-sec" id="sop-11">
+                <div class="sop-hd">
+                    <span class="sop-badge">SOP-11</span>
+                    <div class="sop-tg">
+                        <h2>Komunikasi ke Klien</h2>
+                        <div class="sop-meta">
+                            <span class="chip">PIC: BTP</span>
+                            <span class="chip rd">P0: update tiap 30 menit</span>
+                            <span class="chip or">P1: update tiap 2 jam</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="sop-desc">Dev tidak berkomunikasi langsung ke klien. Satu suara: semua komunikasi eksternal
+                    melalui BTP (operasional) atau BULEAD (eskalasi eksekutif / SLA breach). Proaktif — jangan tunggu
+                    klien yang bertanya.</p>
+                <div class="sla-row">
+                    <span class="sla-lbl">FREKUENSI UPDATE</span>
+                    <span class="sla-i red">P0: <strong>tiap 30 menit</strong></span>
+                    <span class="sla-i">P1: <strong>tiap 2 jam</strong></span>
+                    <span class="sla-i">P2: <strong>tiap 1 hari kerja</strong></span>
+                    <span class="sla-i">Notif resolusi: <strong>≤ 1 jam setelah fix</strong></span>
+                </div>
+                <div class="diag-wrap">
+                    <span class="dlbl">SOP-11.mmd</span>
+                    <div class="mermaid">
+                        flowchart TD
+                        classDef btp fill:#1a3a5c,color:#fff,stroke:none
+                        classDef bl fill:#c8410a,color:#fff,stroke:none
+                        classDef gate fill:#f5f3ee,color:#0f1117,stroke:#d0cdc4
+                        classDef done fill:#1e7a5e,color:#fff,stroke:none
+                        classDef tmpl fill:#2d6a9f,color:#fff,stroke:none
+
+                        EVENT(["Trigger komunikasi:\nTiket baru / Update progress /\nResolusi / Maintenance /
+                        Laporan"]):::gate
+
+                        SEV{Jenis\ntrigger?}:::gate
+
+                        subgraph CONFIRM[Template A — Konfirmasi Tiket]
+                        T1(["Nomor tiket + severity\nPIC + estimasi\n→ kirim ≤ SLA First Response"]):::tmpl
+                        end
+
+                        subgraph UPDATE[Template B — Update Progress]
+                        T2(["Status saat ini\nTemuan sementara\nEstimasi resolusi\nWorkaround jika ada"]):::tmpl
+                        FREQ{Severity?}:::gate
+                        F1(["Kirim tiap 30 mnt\n— P0"]):::btp
+                        F2(["Kirim tiap 2 jam\n— P1"]):::btp
+                        F3(["Kirim tiap 1 hari kerja\n— P2"]):::btp
+                        end
+
+                        subgraph RESOLVE[Template C — Resolusi]
+                        T3(["Root cause\nTindakan yang dilakukan\nWaktu resolusi\nLangkah pencegahan"]):::tmpl
+                        end
+
+                        subgraph MAINT[Template D — Maintenance]
+                        T4(["Jadwal + durasi\nDampak ke layanan\nKontak darurat"]):::tmpl
+                        end
+
+                        subgraph BREACH[SLA Breach — BULEAD]
+                        BL1(["BULEAD komunikasi\nlangsung ke klien\n≤ 2 jam setelah breach\ndokumentasi +
+                        kompensasi"]):::bl
+                        end
+
+                        CHECK{SLA\nbreach?}:::gate
+
+                        EVENT --> SEV
+                        SEV -- "Tiket baru" --> T1
+                        SEV -- "Update insiden" --> T2 --> FREQ
+                        FREQ -- "P0" --> F1
+                        FREQ -- "P1" --> F2
+                        FREQ -- "P2/P3" --> F3
+                        SEV -- "Resolved" --> T3
+                        SEV -- "Maintenance" --> T4
+                        T1 --> CHECK
+                        T3 --> CHECK
+                        F1 --> CHECK
+                        F2 --> CHECK
+                        F3 --> CHECK
+                        CHECK -- "Ya" --> BL1
+                        CHECK -- "Tidak" --> DONE(["Komunikasi terkirim\nADM catat log"]):::done
+                    </div>
+                    <div class="leg-row">
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1a3a5c"></div>BTP
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#2d6a9f"></div>Template
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#c8410a"></div>BULEAD (SLA Breach)
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1e7a5e"></div>Output
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <!-- SOP-12 — LAPORAN BERKALA -->
+            <section class="sop-sec" id="sop-12">
+                <div class="sop-hd">
+                    <span class="sop-badge">SOP-12</span>
+                    <div class="sop-tg">
+                        <h2>Laporan Berkala ke Klien</h2>
+                        <div class="sop-meta">
+                            <span class="chip">PIC: BTP · ADM</span>
+                            <span class="chip">Weekly · Monthly · Incident · Quarterly</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="sop-desc">Empat jenis laporan dengan jadwal dan format yang berbeda. Incident Report P0/P1
+                    adalah dokumen formal — disetujui BULEAD sebelum dikirim ke klien.</p>
+                <div class="sla-row">
+                    <span class="sla-lbl">DEADLINE</span>
+                    <span class="sla-i">Weekly: <strong>Jumat ≤ 16.00</strong></span>
+                    <span class="sla-i">Monthly: <strong>Tgl 5 bulan berikutnya</strong></span>
+                    <span class="sla-i red">Incident P0/P1: <strong>≤ 2 hari kerja</strong></span>
+                    <span class="sla-i">Quarterly: <strong>Minggu pertama bulan berikutnya</strong></span>
+                </div>
+                <div class="diag-wrap">
+                    <span class="dlbl">SOP-12.mmd</span>
+                    <div class="mermaid">
+                        flowchart LR
+                        classDef adm fill:#1e7a5e,color:#fff,stroke:none
+                        classDef btp fill:#1a3a5c,color:#fff,stroke:none
+                        classDef sa fill:#2d6a9f,color:#fff,stroke:none
+                        classDef bl fill:#c8410a,color:#fff,stroke:none
+                        classDef gate fill:#f5f3ee,color:#0f1117,stroke:#d0cdc4
+                        classDef done fill:#1e7a5e,color:#fff,stroke:none
+
+                        TYPE{Jenis\nLaporan}:::gate
+
+                        subgraph WKL[Weekly — Jumat ≤ 16.00]
+                        W1(["ADM ambil data tiket\ndari Plane.so"]):::adm
+                        W2(["BTP tulis & review\n1 halaman / email"]):::btp
+                        W3(["BTP kirim ke klien"]):::btp
+                        end
+
+                        subgraph MON[Monthly — Tgl 5]
+                        M1(["ADM siapkan draf:\nstatistik tiket + uptime\n+ maintenance log"]):::adm
+                        M2(["BTP review\nbahasa & akurasi"]):::btp
+                        M3(["SA review bagian teknis"]):::sa
+                        M4(["BULEAD approve"]):::bl
+                        M5(["BTP kirim ke klien"]):::btp
+                        end
+
+                        subgraph INC[Incident Report — P0/P1 ≤ 2 hari kerja]
+                        I1(["SA tulis kronologi\n+ root cause\n+ prevention actions"]):::sa
+                        I2(["BTP tambah dampak\nbisnis + komunikasi"]):::btp
+                        I3(["BULEAD approve\nsebelum dikirim"]):::bl
+                        I4(["BTP kirim ke klien"]):::btp
+                        end
+
+                        subgraph QTR[Quarterly — Minggu pertama]
+                        Q1(["ADM siapkan draf\ndari 3 Monthly Report"]):::adm
+                        Q2(["BTP + SA review"]):::btp
+                        Q3(["BULEAD presentasi\nke klien"]):::bl
+                        end
+
+                        ARCHIVE(["ADM arsip\nlaporan yang dikirim\ndi folder dokumentasi klien"]):::done
+
+                        TYPE -- "Weekly" --> W1 --> W2 --> W3 --> ARCHIVE
+                        TYPE -- "Monthly" --> M1 --> M2 --> M3 --> M4 --> M5 --> ARCHIVE
+                        TYPE -- "Incident P0/P1" --> I1 --> I2 --> I3 --> I4 --> ARCHIVE
+                        TYPE -- "Quarterly" --> Q1 --> Q2 --> Q3 --> ARCHIVE
+                    </div>
+                    <div class="leg-row">
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1a3a5c"></div>BTP
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#1e7a5e"></div>ADM
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#2d6a9f"></div>SA
+                        </div>
+                        <div class="leg-i">
+                            <div class="leg-dot" style="background:#c8410a"></div>BULEAD
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <!-- SLA MASTER TABLE -->
+            <section class="sop-sec" id="sla-table">
+                <div class="sop-hd">
+                    <span class="sop-badge red">SLA MASTER</span>
+                    <div class="sop-tg">
+                        <h2>SLA Master Table — Support &amp; Maintenance</h2>
+                        <div class="sop-meta">
+                            <span class="chip">26 SLA aktif</span>
+                            <span class="chip rd">Jam kerja: 09.00–17.00 WIB Senin–Jumat</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="sop-desc">Referensi tunggal semua SLA untuk layanan support dan maintenance klien eksternal.
+                    Jika kontrak klien menetapkan SLA lebih ketat, kontrak klien yang berlaku.</p>
+                <div style="overflow-x:auto">
+                    <table class="sev-table">
+                        <thead>
+                            <tr>
+                                <th>Kategori</th>
+                                <th>Aktivitas</th>
+                                <th>PIC</th>
+                                <th>SLA</th>
+                                <th>Eskalasi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="5"
+                                    style="font-weight:600;background:#f5f3ee;vertical-align:top;color:#1a3a5c">
+                                    Penerimaan<br>Tiket</td>
+                                <td>Catat tiket di Plane.so</td>
+                                <td>BTP</td>
+                                <td>≤ 30 menit jam kerja</td>
+                                <td>SA</td>
+                            </tr>
+                            <tr>
+                                <td>First Response ke klien — P0</td>
+                                <td>BTP</td>
+                                <td style="color:#9b1c1c;font-weight:600">≤ 1 jam</td>
+                                <td>BULEAD</td>
+                            </tr>
+                            <tr style="background:var(--paper2)">
+                                <td>First Response ke klien — P1</td>
+                                <td>BTP</td>
+                                <td style="color:#c8410a;font-weight:600">≤ 2 jam</td>
+                                <td>BULEAD</td>
+                            </tr>
+                            <tr>
+                                <td>First Response ke klien — P2</td>
+                                <td>BTP</td>
+                                <td style="font-weight:600">≤ 4 jam</td>
+                                <td>SA</td>
+                            </tr>
+                            <tr style="background:var(--paper2)">
+                                <td>First Response ke klien — P3</td>
+                                <td>BTP</td>
+                                <td style="font-weight:600">≤ 1 hari kerja</td>
+                                <td>SA</td>
+                            </tr>
+
+                            <tr>
+                                <td rowspan="6"
+                                    style="font-weight:600;background:#f5f3ee;vertical-align:top;color:#1a3a5c">Resolusi
+                                </td>
+                                <td>Workaround tersedia — P0</td>
+                                <td>Dev + SA</td>
+                                <td style="color:#9b1c1c;font-weight:600">≤ 2 jam</td>
+                                <td>BULEAD</td>
+                            </tr>
+                            <tr style="background:var(--paper2)">
+                                <td>Workaround tersedia — P1</td>
+                                <td>Dev + SA</td>
+                                <td style="color:#c8410a;font-weight:600">≤ 4 jam</td>
+                                <td>BULEAD</td>
+                            </tr>
+                            <tr>
+                                <td>Resolution permanen — P0</td>
+                                <td>Dev + SA</td>
+                                <td style="color:#9b1c1c;font-weight:600">≤ 4 jam</td>
+                                <td>BULEAD</td>
+                            </tr>
+                            <tr style="background:var(--paper2)">
+                                <td>Resolution permanen — P1</td>
+                                <td>Dev + SA</td>
+                                <td style="color:#c8410a;font-weight:600">≤ 1 hari kerja</td>
+                                <td>BULEAD</td>
+                            </tr>
+                            <tr>
+                                <td>Resolution permanen — P2</td>
+                                <td>Dev + SA</td>
+                                <td style="font-weight:600">≤ 3 hari kerja</td>
+                                <td>SA</td>
+                            </tr>
+                            <tr style="background:var(--paper2)">
+                                <td>Resolution permanen — P3</td>
+                                <td>Dev + SA</td>
+                                <td style="font-weight:600">≤ 5 hari kerja</td>
+                                <td>SA</td>
+                            </tr>
+
+                            <tr>
+                                <td rowspan="3"
+                                    style="font-weight:600;background:#f5f3ee;vertical-align:top;color:#1a3a5c">Hotfix
+                                </td>
+                                <td>PR review SA — P0/P1</td>
+                                <td>SA</td>
+                                <td style="color:#9b1c1c;font-weight:600">≤ 30 menit</td>
+                                <td>BULEAD</td>
+                            </tr>
+                            <tr style="background:var(--paper2)">
+                                <td>PR review SA — P2/P3</td>
+                                <td>SA</td>
+                                <td style="font-weight:600">≤ 2 jam</td>
+                                <td>BULEAD</td>
+                            </tr>
+                            <tr>
+                                <td>Post-deploy verification</td>
+                                <td>SA + Dev</td>
+                                <td style="font-weight:600">≤ 1 jam</td>
+                                <td>BULEAD</td>
+                            </tr>
+
+                            <tr>
+                                <td rowspan="4"
+                                    style="font-weight:600;background:#f5f3ee;vertical-align:top;color:#1a3a5c">
+                                    Komunikasi</td>
+                                <td>Update progress ke klien — P0</td>
+                                <td>BTP</td>
+                                <td style="color:#9b1c1c;font-weight:600">Tiap 30 menit</td>
+                                <td>BULEAD</td>
+                            </tr>
+                            <tr style="background:var(--paper2)">
+                                <td>Update progress ke klien — P1</td>
+                                <td>BTP</td>
+                                <td style="color:#c8410a;font-weight:600">Tiap 2 jam</td>
+                                <td>SA</td>
+                            </tr>
+                            <tr>
+                                <td>Notifikasi resolusi ke klien</td>
+                                <td>BTP</td>
+                                <td style="font-weight:600">≤ 1 jam setelah fix</td>
+                                <td>SA</td>
+                            </tr>
+                            <tr style="background:var(--paper2)">
+                                <td>Komunikasi SLA breach</td>
+                                <td>BULEAD</td>
+                                <td style="color:#9b1c1c;font-weight:600">≤ 2 jam setelah breach</td>
+                                <td>—</td>
+                            </tr>
+
+                            <tr>
+                                <td rowspan="5"
+                                    style="font-weight:600;background:#f5f3ee;vertical-align:top;color:#1a3a5c">
+                                    Maintenance</td>
+                                <td>Notifikasi ke klien — security patch</td>
+                                <td>BTP</td>
+                                <td style="color:#9b1c1c;font-weight:600">≤ 24 jam sebelumnya</td>
+                                <td>SA</td>
+                            </tr>
+                            <tr style="background:var(--paper2)">
+                                <td>Notifikasi ke klien — minor update</td>
+                                <td>BTP</td>
+                                <td style="font-weight:600">≤ 3 hari sebelumnya</td>
+                                <td>SA</td>
+                            </tr>
+                            <tr>
+                                <td>Notifikasi ke klien — major update</td>
+                                <td>BTP</td>
+                                <td style="font-weight:600">≤ 2 minggu sebelumnya</td>
+                                <td>BULEAD</td>
+                            </tr>
+                            <tr style="background:var(--paper2)">
+                                <td>Post-maintenance verification</td>
+                                <td>SA</td>
+                                <td style="font-weight:600">≤ 1 jam setelah selesai</td>
+                                <td>BULEAD</td>
+                            </tr>
+                            <tr>
+                                <td>Notifikasi maintenance selesai ke klien</td>
+                                <td>BTP</td>
+                                <td style="font-weight:600">≤ 30 menit setelah verified</td>
+                                <td>SA</td>
+                            </tr>
+
+                            <tr>
+                                <td rowspan="4"
+                                    style="font-weight:600;background:#f5f3ee;vertical-align:top;color:#1a3a5c">Laporan
+                                </td>
+                                <td>Weekly Status Report terkirim</td>
+                                <td>BTP</td>
+                                <td style="font-weight:600">Jumat ≤ 16.00 WIB</td>
+                                <td>BULEAD</td>
+                            </tr>
+                            <tr style="background:var(--paper2)">
+                                <td>Monthly Service Report terkirim</td>
+                                <td>BTP + ADM</td>
+                                <td style="font-weight:600">Tgl 5 bulan berikutnya</td>
+                                <td>BULEAD</td>
+                            </tr>
+                            <tr>
+                                <td>Incident Report P0/P1 terkirim</td>
+                                <td>SA + BTP</td>
+                                <td style="color:#c8410a;font-weight:600">≤ 2 hari kerja post-resolved</td>
+                                <td>BULEAD</td>
+                            </tr>
+                            <tr style="background:var(--paper2)">
+                                <td>Quarterly Review terkirim</td>
+                                <td>BULEAD + BTP</td>
+                                <td style="font-weight:600">Minggu pertama bulan berikutnya</td>
+                                <td>—</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </div><!-- /content -->
+    </div><!-- /main -->
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'base',
+            themeVariables: {
+                primaryColor: '#e8edf5',
+                primaryTextColor: '#0f1117',
+                primaryBorderColor: '#c0c8d8',
+                lineColor: '#7a8a9e',
+                secondaryColor: '#f5f3ee',
+                tertiaryColor: '#fff',
+                edgeLabelBackground: '#f5f3ee',
+                fontSize: '13px',
+                fontFamily: 'IBM Plex Sans, sans-serif',
+            },
+            flowchart: { curve: 'basis', padding: 20, nodeSpacing: 50, rankSpacing: 60 }
+        });
+
+        const sections = document.querySelectorAll('.sop-sec, #overview');
+        const navItems = document.querySelectorAll('.nav-item');
+        const bcCur = document.getElementById('bc-cur');
+
+        const labels = {
+            'overview': 'Index',
+            'sop-00': 'Onboarding Anggota Baru',
+            'sop-01': 'Intake & Backlog',
+            'sop-02': 'Sprint Planning & Gate 1',
+            'sop-02b': 'Daily Standup',
+            'sop-03': 'PRD & Acceptance Criteria',
+            'sop-04': 'UX Design & Handoff',
+            'sop-05': 'Technical Design (ADR)',
+            'sop-06': 'Dev, Code Review & Gate 2',
+            'sop-07': 'QA/UAT, Gate 3 & Deploy',
+            'sop-08': 'Monitoring & Incident',
+            'sop-09a': 'Penerimaan Tiket',
+            'sop-09b': 'Penanganan & Eskalasi',
+            'sop-10': 'Maintenance Terjadwal',
+            'sop-11': 'Komunikasi ke Klien',
+            'sop-12': 'Laporan Berkala',
+            'severity': 'Severity Reference',
+            'sla-table': 'SLA Master Table'
+        };
+
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    const id = e.target.id;
+                    navItems.forEach(n => n.classList.remove('active'));
+                    const a = document.querySelector(`.nav-item[href="#${id}"]`);
+                    if (a) { a.classList.add('active'); bcCur.textContent = labels[id] || id; }
+                }
+            });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+
+        sections.forEach(s => obs.observe(s));
+    </script>
+</body>
+
+</html>
